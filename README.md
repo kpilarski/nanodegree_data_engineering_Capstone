@@ -48,7 +48,7 @@ In this project, you can choose to complete the project provided for you, or def
 
 ### Project Introduction
 
-The project I have created is to expand U.S. immigration data with additional dimensions. This will allow for wider possibilities when analyzing these data by analysts. In the project I used a star schema with one fact table. For cleaning data, creating structure of data warehouse and all operations with data frames and files I used Spark. Data Warehouse schema is saved in parquet file. A use case for this analytics database is to find connection between immigration and demographic or temperature data. So for example if there is correlation between big aglomerations immigration, or between warmer places and immigration.
+The project I have created is to expand U.S. immigration data with additional dimensions. This will allow for wider possibilities when analyzing these data by analysts. In the project I used a star schema with one fact table. For cleaning data, manipulating and creating structure of data warehouse I used Spark, because this technology allow with ease to operations on large data sets. One more thing follows from the use of this technology - data warehouse is saved in parquet file. The use case for this analytical database is to look at this data through the prism of different dimensions and their connections - for example we can find out if there is connection between immigration and demographic or temperature data. It meanse that this data warehouse will allow us to see things like correlation between big aglomerations and immigration, or between warmer places and immigration.
 
 ### Data Model
 
@@ -56,9 +56,9 @@ I have implemented star schema. It is the typical schema for a Data Warehouse an
 
 #### Below there is a diagram for implemented Data Warehouse:
 
-![schema_postgres_database](static_files/schema_db.png)
+![schema_postgres_database](static_files/scheme_capstone.png)
 
-#### Below there is a descriptions for implemented Data Warehouse tables:
+#### Below there is a data dictionary for tables:
 
 #### Fact tables:
 - ___immigration___ - records with immigration data
@@ -89,11 +89,11 @@ I have implemented star schema. It is the typical schema for a Data Warehouse an
     - counter_summary integer 
     - arrival_date date 
     - departure_date date 
-    - arrival_year string 
-    - arrival_month string 
-    - arrival_day string 
-
+    - arrival_year integer 
+    - arrival_month integer 
+    - arrival_day integer
     
+ 
 #### Dimension tables:
 - ___demographic___ - demographic data
     - state_code string
@@ -112,10 +112,10 @@ I have implemented star schema. It is the typical schema for a Data Warehouse an
     - hispanic_or_atino integer
     - white integer
     
-    
+   
 - ___temperature___ - temperature data
     - port_code string
-    - month long
+    - month integer
     - avg_tempertature double 
     
     
@@ -135,40 +135,45 @@ I have implemented star schema. It is the typical schema for a Data Warehouse an
     
     
 - ___state___ - state codes data
-    - state_code long
+    - state_code string
     - state_name string
     
+    
 - ___country___ - countries data
-    - country_code long
+    - country_code string
     - country_name string
     
+    
 - ___visa___ - visa codes data
-    - visa_id long
+    - visa_id integer
     - visa_type string
     
     
 - ___mode___ - modes data
-    - mode_id long
+    - mode_id integer
     - mode_name string
     
     
 - ___port___ - ports data
-    - port_code long
-    - 
-    port_name string
+    - port_code string
+    - port_name string
+    
     
     
     
 ### Project structure:
 
-1. ___data___ - folder that contains raw data
+1. ___csv_data___ - folder that contains raw data for immigration, demographics, airports and column labels
 2. ___static_files___ - folder that contains static files (for example: picture of database schema)
-3. ___create_tables.py___ - script to create, insert and drops tables
-4. ___etl.py___ - ETL script (based on Jupyter Notebook)
-5. ___etl.ipynb___ - Jupyter Notebook with details and explanations of ETL process
-6. ___README.md___ - project description
-7. ___sql_queries.py___ - python script with all raw SQL queries
-7. ___test.ipynb___ - Jupyter Notebook for testing and adhoc queries
+3. ___data_cleaning.py___ - functions for cleaning and preparing tables
+4. ___data_gathering.py___ - functions for gathering raw data
+5. ___data_paths.py___ - data paths to data
+6. ___data_saving.py___ - functions for saving database to PySpark parquet
+7. ___data_validation.py___ - functions for data quality checks
+8. ___etl.py___ - ETL script of whole process
+9. ___etl_jupyter.ipynb___ - Jupyter Notebook with details and explanations
+10. ___README.md___ - project description
+
 
 
 
@@ -189,6 +194,8 @@ I have implemented star schema. It is the typical schema for a Data Warehouse an
 
 
 ### Starting ETL Pipeline
+
+###### !important! Whole ETL process step by step is also in etl_jupyter.ipynb file
 
 We can run whole ETL process with one command:
 
